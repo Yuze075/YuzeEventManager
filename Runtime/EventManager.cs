@@ -9,11 +9,11 @@ namespace YuzeToolkit.Framework.EventManager
     {
         private class IsNotIEventInfoException : Exception
         {
-            public IsNotIEventInfoException(string message): base(message)
+            public IsNotIEventInfoException(string message) : base(message)
             {
             }
         }
-        
+
         private static readonly Dictionary<Type, List<Action<IEventInfo>>> EventDictionary = new();
 
         /// <typeparam name="T">继承自<see cref="IEventInfo"/>的对象</typeparam>
@@ -39,11 +39,11 @@ namespace YuzeToolkit.Framework.EventManager
                 if (!EventDictionary[type].Contains(action))
                     EventDictionary[type].Add(action);
                 else
-                    Logger.Log($"[EventManager.AddListener]: {action} already in EventManager");
+                    Logger.Warning($"[EventManager.AddListener]: {action} already in EventManager");
             }
             catch (IsNotIEventInfoException e)
             {
-                Logger.Error(e.ToString());
+                Logger.Exception(e);
                 throw;
             }
         }
@@ -69,13 +69,13 @@ namespace YuzeToolkit.Framework.EventManager
                     if (EventDictionary[type].Contains(action))
                         EventDictionary[type].Remove(action);
                     else
-                        Logger.Log($"[EventManager.RemoveListener]: {action} is not in EventManager");
+                        Logger.Warning($"[EventManager.RemoveListener]: {action} is not in EventManager");
                 else
-                    Logger.Log($"[EventManager.RemoveListener]: {type} is not in EventManager");
+                    Logger.Warning($"[EventManager.RemoveListener]: {type} is not in EventManager");
             }
             catch (IsNotIEventInfoException e)
             {
-                Logger.Error(e.ToString());
+                Logger.Exception(e);
                 throw;
             }
         }
@@ -104,7 +104,7 @@ namespace YuzeToolkit.Framework.EventManager
                 }
             }
             else
-                Logger.Log($"[EventManager.TriggerEvent]: {eventInfo.GetType()} is not in EventManager");
+                Logger.Warning($"[EventManager.TriggerEvent]: {eventInfo.GetType()} is not in EventManager");
         }
 
         public static void TriggerEvent(Type type)
@@ -117,12 +117,12 @@ namespace YuzeToolkit.Framework.EventManager
             }
             catch (IsNotIEventInfoException e)
             {
-                Logger.Error(e.ToString());
+                Logger.Exception(e);
                 throw;
             }
             catch (MissingMethodException e)
             {
-                Logger.Error(e.ToString());
+                Logger.Exception(e);
                 throw;
             }
         }
