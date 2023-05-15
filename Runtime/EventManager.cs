@@ -103,7 +103,7 @@ namespace YuzeToolkit.Framework.EventManager
                 }
             }
             else
-                Logger.Warning($"[EventManager.TriggerEvent]: {eventInfo.GetType()} is not in EventManager");
+                Logger.Log($"[EventManager.TriggerEvent]: {eventInfo.GetType()} is not in EventManager");
         }
 
         public static void TriggerEvent(Type type)

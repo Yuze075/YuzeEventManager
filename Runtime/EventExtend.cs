@@ -8,7 +8,7 @@ namespace YuzeToolkit.Framework.EventManager
         {
             EventManager.TriggerEvent(eventInfo);
         }
-        
+
         public static void AddListener(this IEventInfo eventInfo, Action<IEventInfo> action)
         {
             EventManager.AddListener(eventInfo, action);
@@ -24,7 +24,17 @@ namespace YuzeToolkit.Framework.EventManager
             eventGroup.AddListener(eventInfo, action);
         }
 
+        public static void AddListener(this IEventInfo eventInfo, Action<IEventInfo> action, EventGroup eventGroup)
+        {
+            eventGroup.AddListener(eventInfo, action);
+        }
+
         public static void RemoveListener(this IEventInfo eventInfo, EventGroup eventGroup, Action<IEventInfo> action)
+        {
+            eventGroup.RemoveListener(eventInfo, action);
+        }
+
+        public static void RemoveListener(this IEventInfo eventInfo, Action<IEventInfo> action, EventGroup eventGroup)
         {
             eventGroup.RemoveListener(eventInfo, action);
         }

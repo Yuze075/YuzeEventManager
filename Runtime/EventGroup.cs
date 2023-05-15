@@ -33,7 +33,7 @@ namespace YuzeToolkit.Framework.EventManager
                 EventManager.AddListener(type, action);
             }
             else
-                Logger.Log($"[EventGroup.AddListener]: {action} already in EventGroup");
+                Logger.Warning($"[EventGroup.AddListener]: {action} already in EventGroup");
         }
 
         /// <typeparam name="T">继承自<see cref="IEventInfo"/>的对象</typeparam>
@@ -56,9 +56,9 @@ namespace YuzeToolkit.Framework.EventManager
                     EventManager.RemoveListener(type, action);
                 }
                 else
-                    Logger.Log($"[EventGroup.RemoveListener]: {action} is not in EventGroup");
+                    Logger.Warning($"[EventGroup.RemoveListener]: {action} is not in EventGroup");
             else
-                Logger.Log($"[EventGroup.RemoveListener]: {type} is not in EventGroup");
+                Logger.Warning($"[EventGroup.RemoveListener]: {type} is not in EventGroup");
         }
 
         public void ClearAll()
