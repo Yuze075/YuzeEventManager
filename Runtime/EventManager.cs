@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace YuzeToolkit.Framework.EventManager
 {
-    [ExecuteAlways]
     public static class EventManager
     {
         private class IsNotIEventInfoException : Exception
