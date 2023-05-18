@@ -22,7 +22,7 @@ namespace YuzeToolkit.Framework.EventManager
             AddListener(eventInfo.GetType(), action);
         }
 
-        private void AddListener(Type type, Action<IEventInfo> action)
+        public void AddListener(Type type, Action<IEventInfo> action)
         {
             if (!_cachedEventDictionary.ContainsKey(type))
                 _cachedEventDictionary.Add(type, new List<Action<IEventInfo>>());
@@ -47,7 +47,7 @@ namespace YuzeToolkit.Framework.EventManager
             RemoveListener(eventInfo.GetType(), action);
         }
 
-        private void RemoveListener(Type type, Action<IEventInfo> action)
+        public void RemoveListener(Type type, Action<IEventInfo> action)
         {
             if (_cachedEventDictionary.ContainsKey(type))
                 if (_cachedEventDictionary[type].Contains(action))
