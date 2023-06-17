@@ -7,7 +7,7 @@ namespace YuzeToolkit.Framework.EventManager
     /// <summary>
     /// 用于管理一个对象中的全部事件，方便统一删除
     /// </summary>
-    public class EventGroup
+    public partial class EventGroup
     {
         private readonly Dictionary<Type, List<Action<IEventInfo>>> _cachedEventDictionary = new();
 
@@ -16,7 +16,7 @@ namespace YuzeToolkit.Framework.EventManager
         {
             AddListener(typeof(T), action);
         }
-        
+
         public void AddListener(IEventInfo eventInfo, Action<IEventInfo> action)
         {
             AddListener(eventInfo.GetType(), action);
@@ -74,6 +74,19 @@ namespace YuzeToolkit.Framework.EventManager
             }
 
             _cachedEventDictionary.Clear();
+
+#if UNITASK
+            foreach (var (type, funcList) in _cachedAsyncEventDictionary)
+            {
+                foreach (var func in funcList)
+                {
+                    EventManager.RemoveAsyncListener(type, func);
+                }
+
+                funcList.Clear();
+            }
+            _cachedAsyncEventDictionary.Clear();
+#endif
             Logger.Log($"[EventGroup.ClearAll]: clear all");
         }
     }

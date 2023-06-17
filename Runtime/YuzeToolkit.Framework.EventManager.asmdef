@@ -2,7 +2,8 @@
     "name": "YuzeToolkit.Framework.EventManager",
     "rootNamespace": "",
     "references": [
-        "GUID:4d82fe99514a6494ba540da8e8b9f313"
+        "GUID:4d82fe99514a6494ba540da8e8b9f313",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -16,6 +17,11 @@
             "name": "com.yuzetoolkit.framework.loggersystem",
             "expression": "0.0.0",
             "define": "LOGGER_SYSTEM"
+        },
+        {
+            "name": "com.cysharp.unitask",
+            "expression": "0.0.0",
+            "define": "UNITASK"
         }
     ],
     "noEngineReferences": false

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace YuzeToolkit.Framework.EventManager
 {
-    public static class EventManager
+    public static partial class EventManager
     {
         private class IsNotIEventInfoException : Exception
         {
@@ -88,9 +88,8 @@ namespace YuzeToolkit.Framework.EventManager
         public static void TriggerEvent(IEventInfo eventInfo)
         {
             var type = eventInfo.GetType();
-            if (EventDictionary.ContainsKey(type))
+            if (EventDictionary.TryGetValue(type, out var actionList))
             {
-                var actionList = EventDictionary[type];
                 if (actionList.Count == 0)
                 {
                     Logger.Log($"[EventManager.TriggerEvent]: {eventInfo.GetType()} is null");
@@ -134,6 +133,15 @@ namespace YuzeToolkit.Framework.EventManager
             }
 
             EventDictionary.Clear();
+
+#if UNITASK
+            foreach (var keyValuePair in AsyncEventDictionary)
+            {
+                keyValuePair.Value.Clear();
+            }
+
+            AsyncEventDictionary.Clear();
+#endif
             Logger.Log($"[EventManager.ClearAll]: clear all");
         }
     }

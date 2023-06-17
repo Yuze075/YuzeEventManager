@@ -1,4 +1,5 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 
 namespace YuzeToolkit.Framework.EventManager
 {
@@ -38,5 +39,51 @@ namespace YuzeToolkit.Framework.EventManager
         {
             eventGroup.RemoveListener(eventInfo, action);
         }
+
+#if UNITASK
+        public static async UniTask TriggerAsyncEvent(this IAsyncEventInfo asyncEventInfo)
+        {
+            await EventManager.TriggerAsyncEvent(asyncEventInfo);
+        }
+        
+        public static async UniTask TriggerAsyncEventParallel(this IAsyncEventInfo asyncEventInfo)
+        {
+            await EventManager.TriggerAsyncEventParallel(asyncEventInfo);
+        }
+
+        public static void AddAsyncListener(this IAsyncEventInfo asyncEventInfo, Func<IAsyncEventInfo, UniTask> func)
+        {
+            EventManager.AddAsyncListener(asyncEventInfo, func);
+        }
+
+        public static void RemoveAsyncListener(this IAsyncEventInfo asyncEventInfo, Func<IAsyncEventInfo, UniTask> func)
+        {
+            EventManager.RemoveAsyncListener(asyncEventInfo, func);
+        }
+
+        public static void AddAsyncListener(this IAsyncEventInfo asyncEventInfo, EventGroup eventGroup,
+            Func<IAsyncEventInfo, UniTask> func)
+        {
+            eventGroup.AddAsyncListener(asyncEventInfo, func);
+        }
+
+        public static void AddAsyncListener(this IAsyncEventInfo asyncEventInfo, Func<IAsyncEventInfo, UniTask> func,
+            EventGroup eventGroup)
+        {
+            eventGroup.AddAsyncListener(asyncEventInfo, func);
+        }
+
+        public static void RemoveAsyncListener(this IAsyncEventInfo asyncEventInfo, EventGroup eventGroup,
+            Func<IAsyncEventInfo, UniTask> func)
+        {
+            eventGroup.RemoveAsyncListener(asyncEventInfo, func);
+        }
+
+        public static void RemoveAsyncListener(this IAsyncEventInfo asyncEventInfo, Func<IAsyncEventInfo, UniTask> func,
+            EventGroup eventGroup)
+        {
+            eventGroup.RemoveAsyncListener(asyncEventInfo, func);
+        }
+#endif
     }
 }
